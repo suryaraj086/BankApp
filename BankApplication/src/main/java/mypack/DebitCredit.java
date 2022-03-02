@@ -1,6 +1,7 @@
 package mypack;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -28,37 +29,39 @@ public class DebitCredit extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		String debtCrdt= request.getParameter("debitorcredit");
-		APILayer logicLayer=new APILayer();
+		PrintWriter out = response.getWriter();
+		APILayer logicLayer=null;
+		try {
+			logicLayer = new APILayer();
+		} catch (ClassNotFoundException | IOException | CustomException e1) {
+			e1.printStackTrace();
+		}
 		long userId=Long.parseLong(request.getParameter("id"));
 		long accNumber=Long.parseLong(request.getParameter("accountnumber"));
 		long amount=Long.parseLong(request.getParameter("amount"));
 		if(debtCrdt.equals("deposit"))
 		{
 		try {
-			logicLayer.readFile();
 		    logicLayer.deposit(accNumber, userId, amount);
 			 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 	         rd.forward(request, response);  
 		} catch (CustomException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}
 		else {
 		    try {
-		    	logicLayer.readFile();
 				logicLayer.withdrawal(accNumber,userId, amount);
+				 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+		         rd.forward(request, response);  
 			} catch (ClassNotFoundException | SQLException | CustomException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				out.print("invalid amount");
 			}
-			 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
-	         rd.forward(request, response);  
+			
 		
 		}
 		

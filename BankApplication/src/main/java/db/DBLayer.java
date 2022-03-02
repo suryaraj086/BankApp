@@ -227,17 +227,28 @@ public class DBLayer implements Storage {
 			stmt.setLong(1,userId);
 		  	stmt.setString(2,password);
 		  	ResultSet rs = stmt.executeQuery();
+		  	if (!rs.isBeforeFirst() ) {    
+		  	   throw new CustomException("invalid username and password");
+		  	} 
 		  	 while (rs.next())
 		      {
 		  		  role=rs.getBoolean("role");
 		      }
-		      }
+		}
 	
 		return role;
 		}
 	
-	public void updateCustomer(long name,int age,char gender,long id)
+	public void updateCustomer(String name,int age,char gender,long id) throws SQLException, CustomException
 	{
 		String input="Update customerdata " + "SET name=? , age=? , gender=? where id=?";
+		try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+		{ 	
+		  	stmt.setString(1,name);
+		  	stmt.setLong(2,age);
+		  	stmt.setString(3,String.valueOf(gender));
+		  	stmt.setLong(4,id);
+		    stmt.executeUpdate();
+		}
 	}
 }

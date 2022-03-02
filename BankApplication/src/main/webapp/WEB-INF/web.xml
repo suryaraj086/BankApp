@@ -34,6 +34,11 @@
   <servlet-class>mypack.AddCustomer</servlet-class>  
   </servlet> 
   
+     <servlet>  
+  <servlet-name>Deactivate</servlet-name>  
+  <servlet-class>mypack.Deactivate</servlet-class>  
+  </servlet> 
+  
   <servlet-mapping>  
   <servlet-name>LoginController</servlet-name>
   <url-pattern>/LoginController</url-pattern>  
@@ -58,5 +63,11 @@
   <servlet-name>AddCustomer</servlet-name>  
   <url-pattern>/AddCustomer</url-pattern>  
   </servlet-mapping>  
+  
+  <servlet-mapping>  
+  <servlet-name>Deactivate</servlet-name>  
+  <url-pattern>/Deactivate</url-pattern>  
+  </servlet-mapping> 
+  
   
 </web-app>

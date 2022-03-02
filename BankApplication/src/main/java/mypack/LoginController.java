@@ -4,7 +4,6 @@ package mypack;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -12,6 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import db.*;
 import myexception.CustomException;
 
@@ -30,69 +31,60 @@ public class LoginController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Cache temp=new Cache();
+
 		DBLayer dbObj=new DBLayer();
+		APILayer logicLayer=null;
+		
+		try {
+			logicLayer=new APILayer();
+		} catch (ClassNotFoundException | IOException | CustomException e1) {
+			e1.printStackTrace();
+		}
+		
 		PrintWriter out = response.getWriter();
         String page=request.getParameter("page");
-        
+       
         if(page.equals("login"))
         {
         	int id = Integer.parseInt(request.getParameter("id"));
  	     	String password = request.getParameter("password");
+ 	        HttpSession session = request.getSession();
+ 	        session.setAttribute("customerId", id);
 		try {
-			if (dbObj.login(id, password)) {
+			boolean role=dbObj.login(id, password);
+			if (role) 
+			{
 			    RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 			    rd.forward(request, response);  
-			} else
-				try {
-					if(!dbObj.login(id, password)){
-						   RequestDispatcher rd=request.getRequestDispatcher("customermenu.jsp");  
-					        rd.forward(request, response);  
-					}
-					
-					else
-					{
-						 out.println("error"); 	
-					}
-				} catch (SQLException | CustomException | ServletException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		} catch (SQLException | CustomException | ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			}
+			else
+			{
+			      Map<Long, AccountInfo> userMap=logicLayer.retrieveAccount(id);    
+			      request.setAttribute("userMap",userMap);
+				  RequestDispatcher rd=request.getRequestDispatcher("customermenu.jsp");  
+			      rd.forward(request, response);  
+			}	
+		    }
+		catch (SQLException | CustomException | ServletException | IOException e) {
+					 out.println("Inavlid username and password"); 
+					 e.printStackTrace();
+			}
 		}
-        }
+        
         
 		if(page.equals("Account details"))
 		{
-			Map<Long, Map<Long, AccountInfo>> accMap=new HashMap<Long, Map<Long,AccountInfo>>();
-				try {
-					temp = dbObj.readFromFile();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				accMap = temp.accountMap;
-				request.setAttribute("LoginController", accMap);
-				
-			 RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
-	            rd.forward(request, response);  
+			Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
+			request.setAttribute("LoginController", accMap);
+	    	RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
+	        rd.forward(request, response);  
 			
 		}
 		
 		if(page.equals("Customer details"))
 		{
-			Map<Long, CustomerInfo> accMap;
-			try 
-			{	
-				temp = dbObj.readFromFile();	
-			} 
-			catch (Exception e) 
-			{
-					e.printStackTrace();
-			}
-			accMap = temp.customerMap;
-			request.setAttribute("LoginController", accMap);
+			Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
+			request.setAttribute("LoginController", cusMap);
 			RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
 	        rd.forward(request, response);  	
 		}
@@ -104,7 +96,7 @@ public class LoginController extends HttpServlet {
 			super.init(config);
 			APILayer logicLayer=new APILayer();
 			config.getServletContext().setAttribute("logic", logicLayer);
-		} catch (ServletException e) {
+		} catch (ServletException | ClassNotFoundException | IOException | CustomException e) {
 			e.printStackTrace();
 		}
 		config.getServletContext();

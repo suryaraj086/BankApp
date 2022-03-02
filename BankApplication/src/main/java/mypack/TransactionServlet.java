@@ -19,36 +19,43 @@ public class TransactionServlet extends HttpServlet {
 
     public TransactionServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-long fromId=Long.parseLong(request.getParameter("fromid"));
-long fromAcc=Long.parseLong(request.getParameter("fromaccount"));
-long toId=Long.parseLong(request.getParameter("toid"));
-long toAcc= Long.parseLong(request.getParameter("toaccount"));
-long amount=Long.parseLong(request.getParameter("amount"));
-
-	APILayer logicLayer=new APILayer();
-	try {
-		logicLayer.readFile();
+	
+	doGet(request, response);
+	long fromId=Long.parseLong(request.getParameter("fromid"));
+	long fromAcc=Long.parseLong(request.getParameter("fromaccount"));
+	long toId=Long.parseLong(request.getParameter("toid"));
+	long toAcc= Long.parseLong(request.getParameter("toaccount"));
+	long amount=Long.parseLong(request.getParameter("amount"));
+    String cust=request.getParameter("customer");
+	APILayer logicLayer=(APILayer) request.getServletContext().getAttribute("logic");
+	try 
+	{
+	
 		logicLayer.deposit(toAcc, toId, amount);
 		logicLayer.withdrawal(fromAcc, fromId, amount);
-	} catch (ClassNotFoundException | CustomException | SQLException e) {
-		// TODO Auto-generated catch block
+		if(cust==null ||cust.equals("null"))
+		{
+		RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+        rd.forward(request, response);  
+		}
+		else
+		{
+			RequestDispatcher rd=request.getRequestDispatcher("customermenu.jsp");  
+	        rd.forward(request, response);  
+		}
+	}
+	catch (ClassNotFoundException | CustomException | SQLException e) 
+	{
 		e.printStackTrace();
 	}
-	     RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
-         rd.forward(request, response);  
 	}
-
 }

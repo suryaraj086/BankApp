@@ -8,10 +8,12 @@ import java.util.Map;
 
 public class APILayer {
 
-//    private Map<Long,CustomerInfo> customerMap=new HashMap<>();
-//    private Map<Long,Map<Long, AccountInfo>> accountMap=new HashMap<>();
     public Cache cache=null;
     public Storage persistLayer=new DBLayer();
+    
+    public APILayer() throws ClassNotFoundException, IOException, CustomException {
+		readFile();
+	}
     
     public void checkStatus(AccountInfo pjObj) throws CustomException {
 
@@ -92,7 +94,8 @@ public class APILayer {
         return pjObj.getBalance();
     }
 
-    public Map<Long, AccountInfo> retrieveAccount(long id) throws CustomException {
+    public Map<Long, AccountInfo> retrieveAccount(long id) throws CustomException 
+    {
     	Map<Long,Map<Long, AccountInfo>> accountMap=cache.accountMap;
         Map<Long, AccountInfo> tempMap=new HashMap<>();
         tempMap=accountMap.get(id);
@@ -140,10 +143,10 @@ public class APILayer {
     }
 
     public void readFile() throws ClassNotFoundException, IOException, CustomException {
-
         cache=persistLayer.readFromFile();
-
-        
     }
-
+    
+    public void updateCustomer(String name,int age,char gender,long id) throws SQLException, CustomException {
+		persistLayer.updateCustomer(name, age, gender, id);
+	}
 }

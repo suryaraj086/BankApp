@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-       <%@ page import="java.util.*" %>
+     <%@ page import="java.util.*" %>
      <%@ page import="db.*" %>
      <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-      <%@ page import="javax.servlet.*" %>
+     <%@ page import="javax.servlet.*" %>
       
 <!DOCTYPE html>
 <html>
@@ -19,10 +19,12 @@ float:right;
 </style>
 </head>
 <body>
+
 <a href="adminmenu.jsp">Home</a>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" href="addaccount.jsp">Add account</a>
-<a id="add" href="">Deactivate Account</a>
+<form action="Deactivate" method="post">
+<input type="submit" value="Deactivate">
 
 <br>
 
@@ -39,22 +41,21 @@ float:right;
      <th>Status</th>
   </tr>
 
-  
- 
   <c:forEach items="${LoginController}" var="current">
     <c:forEach items="${current.value}" var="current1"> 
     <tr>
-       <td><input type="checkbox" name="name1" />&nbsp;</td>
-      <td><c:out value="${current.key}"/></td>
-      <td><c:out value="${current1.key}"/></td>
+       <td><input type="checkbox" name="name" />&nbsp;</td>
+       <td><c:out value="${current.key}"/></td>
+       <td><c:out value="${current1.key}"/></td>
        <td><c:out value="${current1.value.getName()}" /></td>
        <td><c:out value="${current1.value.getBranch()}" /></td>
        <td><c:out value="${current1.value.getBalance()}" /></td>
        <td><c:out value="${current1.value.isStatus()}" /></td>
-      
     </tr>
   </c:forEach>
  </c:forEach>
+ 
 </table>
+</form>
 </body>
 </html>

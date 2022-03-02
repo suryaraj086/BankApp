@@ -31,11 +31,14 @@ public void setBalance(long balance) {
 public void setAccountNumber(long accountNumber) {
 	this.accountNumber = accountNumber;
 }
+public long getAccountNumber() {
+	return accountNumber;
+}
+public void setId(long id) {
+	this.id = id;
+}
 public Long getId() {
 	return id;
-}
-public void setId(Long id) {
-	this.id = id;
 }
 public String getName() {
 	return name;
@@ -46,7 +49,7 @@ public void setName(String name) {
 @Override
 public String toString() {
 	return "AccountInfo [id=" + id + ", name=" + name + ", accountNumber=" + accountNumber + ", branch=" + branch
-			+ ", status=" + status + "]";
+			+ ", balance=" + balance + ", status=" + status + "]";
 }
 
 public boolean isStatus() {

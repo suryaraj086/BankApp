@@ -22,14 +22,16 @@ margin-top: 70px
 </head>
 <body>
 <a href="customermenu.jsp">Home</a>
-<form action="TransferController" method="post">
+<form action="TransactionServlet" method="post">
   <div class="container">
     <h1>Bank Transfer</h1>
     <hr>
 <h2>From Account</h2>
 <!--     <label for="id"><b>User Id</b></label> -->
 <!--     <input type="text" placeholder="Enter Id" name="fromid" id="fromid" required> -->
-
+<% Object id=request.getSession().getAttribute("customerId");%>
+<input type="hidden" name="fromid" value="<%out.print(id); %>"> 
+<input type="hidden" name="customer" value="customer">
     <label for="account"><b>Account Number</b></label>
     <input type="text" placeholder="Enter Account Number" name="fromaccount" id="fromaccount" required>
     
@@ -45,7 +47,6 @@ margin-top: 70px
     <input type="text" placeholder="Enter Amount" name="amount" id="amount" required>
     <button type="submit" class="registerbtn">SUBMIT</button>
   </div>
-  
 </form>
 </body>
 </html>

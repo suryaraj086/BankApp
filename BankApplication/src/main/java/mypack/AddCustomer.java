@@ -2,17 +2,12 @@ package mypack;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import db.APILayer;
-import db.Cache;
-import db.DBLayer;
 import myexception.CustomException;
 
 
@@ -31,34 +26,43 @@ public class AddCustomer extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
-		DBLayer dbObj=new DBLayer();
+		APILayer logicLayer=null;
 		String id=request.getParameter("userId");
 		String name=request.getParameter("name");
 		char gender=request.getParameter("gender").charAt(0);
 		int age=Integer.parseInt(request.getParameter("age"));
-	    System.out.println(id);
-		Cache cache = null;
-		if(id==null || id.isEmpty())
+		try 
+		{
+	        logicLayer = new APILayer();
+		} catch (ClassNotFoundException | IOException | CustomException e1) {
+			e1.printStackTrace();
+		}
+		
+		if(id.equals("null"))
 		{
 		try 
 		{
-		cache = dbObj.readFromFile();
-		long userID=cache.idNo;
+		long userID=logicLayer.cache.idNo;
 		userID++;
-		dbObj.storeCustomer(userID,name,gender,age);
-		   RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
-	         rd.forward(request, response); 
+		logicLayer.persistLayer.storeCustomer(userID,name,gender,age);
+		RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+	    rd.forward(request, response); 
 		}
-		 catch (ClassNotFoundException | SQLException | IOException | CustomException e) {
-			// TODO Auto-generated catch block
+		catch (ClassNotFoundException | SQLException | IOException | CustomException e) {
 			e.printStackTrace();
 		}
 		}
+		
 		else 
-		{      
-			dbObj.storeCustomer();
-			   RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
-		         rd.forward(request, response); 
+		{  
+			long cusId= Long.parseLong(id);
+			try {
+				logicLayer.updateCustomer(name, age, gender, cusId);
+			} catch (SQLException | CustomException e) {
+				e.printStackTrace();
+			}
+			 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+		     rd.forward(request, response); 
 		}
 			
 		
