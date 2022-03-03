@@ -11,7 +11,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f2f2f2;
 }
-form{
+#transfer{
 height:100px;
 width: 500px;
 margin-left: 600px;
@@ -21,8 +21,8 @@ margin-top: 20px
 </head>
 <body>
 <a href="adminmenu.jsp">Home</a>
-
-<form action="TransactionServlet" method="post">
+<jsp:include page="adminmenu.jsp"></jsp:include>
+<form action="TransactionServlet" id="transfer" method="post">
   <div class="container">
     <h1>Bank Transfer</h1>
     <hr>

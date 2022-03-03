@@ -26,17 +26,11 @@ public class AddCustomer extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
-		APILayer logicLayer=null;
+		APILayer logicLayer=(APILayer) request.getServletContext().getAttribute("logic");
 		String id=request.getParameter("userId");
 		String name=request.getParameter("name");
 		char gender=request.getParameter("gender").charAt(0);
 		int age=Integer.parseInt(request.getParameter("age"));
-		try 
-		{
-	        logicLayer = new APILayer();
-		} catch (ClassNotFoundException | IOException | CustomException e1) {
-			e1.printStackTrace();
-		}
 		
 		if(id.equals("null"))
 		{
@@ -54,7 +48,7 @@ public class AddCustomer extends HttpServlet {
 		}
 		
 		else 
-		{  
+		{ 
 			long cusId= Long.parseLong(id);
 			try {
 				logicLayer.updateCustomer(name, age, gender, cusId);

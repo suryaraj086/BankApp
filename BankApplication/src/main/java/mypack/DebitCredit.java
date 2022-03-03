@@ -47,11 +47,9 @@ public class DebitCredit extends HttpServlet {
 		    logicLayer.deposit(accNumber, userId, amount);
 			 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 	         rd.forward(request, response);  
-		} catch (CustomException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
+		catch (Exception e) {
+			out.print("deposit amount can not be negative or zero");		}
 		}
 		else {
 		    try {
@@ -59,7 +57,7 @@ public class DebitCredit extends HttpServlet {
 				 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 		         rd.forward(request, response);  
 			} catch (ClassNotFoundException | SQLException | CustomException e) {
-				out.print("invalid amount");
+				out.print("insufficient balance");
 			}
 			
 		

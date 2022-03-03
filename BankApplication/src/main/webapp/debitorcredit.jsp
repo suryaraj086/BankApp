@@ -12,7 +12,7 @@ body {
   background-color: #f2f2f2;
 }
 
-form{
+#debtcrdt{
 height:100px;
 width: 500px;
 margin-left: 650px;
@@ -22,10 +22,9 @@ margin-top: 130px
 </style>
 </head>
 <body>
-
 <a href="adminmenu.jsp">Home</a>
-
-<form action="DebitCredit" method="post">
+<jsp:include page="adminmenu.jsp"></jsp:include>
+<form action="DebitCredit" id="debtcrdt" method="post">
 
   <div class="container">
     <h1>Deposit/Withdraw</h1>

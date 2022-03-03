@@ -30,7 +30,6 @@ public class Deactivate extends HttpServlet {
 		doGet(request, response);
 		APILayer logicLayer=(APILayer)request.getServletContext().getAttribute("logic");
 		String[] arr=request.getParameterValues("name");
-//		Long accNo;
 		for(int i=0;i<arr.length;i++)
 		{
 			try {

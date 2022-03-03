@@ -24,18 +24,19 @@ input[type=submit] {
   text-decoration: none;
   font-family: sans-serif;
 }
+body{
+background-color: #E0E0E0;
+}
 </style>
 </head>
-
 <body>
-
 <form action="LoginController" method="post">
 <input type="submit" name="page" value="Account details">
 <input type="submit" name="page" value="Customer details">
-<a href="debitorcredit.jsp">Deposit</a>
-<a href="debitorcredit.jsp">Withdraw</a>
-<a href="banktransferadmin.jsp">Transfer to another account</a>
-<a href="login.jsp">logout</a>
+<input type="submit" name="page" value="Deposit">
+<input type="submit" name="page" value="Withdraw">
+<input type="submit" name="page" value="Transfer to another account">
+<input type="submit" name="page" value="logout">
 </form>
 </body>
 </html>

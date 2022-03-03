@@ -10,7 +10,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f2f2f2;
 }
-form{
+#accform{
 height:100px;
 width: 500px;
 margin-left: 600px;
@@ -21,7 +21,8 @@ margin-top: 130px
 </head>
 <body>
 <a href="adminmenu.jsp">Home</a>
-<form action="AddAccount" method="post">
+<jsp:include page="adminmenu.jsp"></jsp:include>
+<form action="AddAccount" id="accform" method="post">
   <div class="container">
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>

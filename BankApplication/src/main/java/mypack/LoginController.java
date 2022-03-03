@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import db.*;
 import myexception.CustomException;
 
@@ -33,14 +32,7 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 
 		DBLayer dbObj=new DBLayer();
-		APILayer logicLayer=null;
-		
-		try {
-			logicLayer=new APILayer();
-		} catch (ClassNotFoundException | IOException | CustomException e1) {
-			e1.printStackTrace();
-		}
-		
+		APILayer logicLayer=(APILayer) request.getServletContext().getAttribute("logic");
 		PrintWriter out = response.getWriter();
         String page=request.getParameter("page");
        
@@ -49,16 +41,20 @@ public class LoginController extends HttpServlet {
         	int id = Integer.parseInt(request.getParameter("id"));
  	     	String password = request.getParameter("password");
  	        HttpSession session = request.getSession();
- 	        session.setAttribute("customerId", id);
+ 	        
 		try {
+			
 			boolean role=dbObj.login(id, password);
+			session.setAttribute("customerId", id);
+			
 			if (role) 
 			{
+
 			    RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 			    rd.forward(request, response);  
 			}
 			else
-			{
+			{	
 			      Map<Long, AccountInfo> userMap=logicLayer.retrieveAccount(id);    
 			      request.setAttribute("userMap",userMap);
 				  RequestDispatcher rd=request.getRequestDispatcher("customermenu.jsp");  
@@ -70,7 +66,11 @@ public class LoginController extends HttpServlet {
 					 e.printStackTrace();
 			}
 		}
-        
+        HttpSession session = request.getSession();
+        if (session.getAttribute("customerId") == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+        }
+        else {
         
 		if(page.equals("Account details"))
 		{
@@ -78,7 +78,7 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("LoginController", accMap);
 	    	RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
 	        rd.forward(request, response);  
-			
+	            
 		}
 		
 		if(page.equals("Customer details"))
@@ -88,7 +88,35 @@ public class LoginController extends HttpServlet {
 			RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
 	        rd.forward(request, response);  	
 		}
-       }	
+		
+		if(page.equals("Deposit"))
+		{
+			RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
+	        rd.forward(request, response); 
+		}
+		
+		if(page.equals("Withdraw"))
+		{
+			RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
+	        rd.forward(request, response); 
+		}
+		
+		if(page.equals("Transfer to another account"))
+		{
+			RequestDispatcher rd=request.getRequestDispatcher("banktransferadmin.jsp");  
+	        rd.forward(request, response); 
+		}
+		
+		if(page.equals("logout"))
+		{
+	
+			HttpSession session1 = request.getSession();
+			session1.invalidate();
+			RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+	        rd.forward(request, response);  	
+		}
+        }
+      }	
 	
 	
 	public void init(ServletConfig config) {

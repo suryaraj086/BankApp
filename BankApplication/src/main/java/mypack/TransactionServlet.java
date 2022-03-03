@@ -42,6 +42,7 @@ public class TransactionServlet extends HttpServlet {
 	
 		logicLayer.deposit(toAcc, toId, amount);
 		logicLayer.withdrawal(fromAcc, fromId, amount);
+		
 		if(cust==null ||cust.equals("null"))
 		{
 		RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
