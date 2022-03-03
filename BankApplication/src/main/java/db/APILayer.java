@@ -63,6 +63,7 @@ public class APILayer {
         if(bool != newStatus)
         {
             pjObj.setStatus(newStatus);
+            
             return "status changed";
         }
         if(bool)
@@ -149,4 +150,8 @@ public class APILayer {
     public void updateCustomer(String name,int age,char gender,long id) throws SQLException, CustomException {
 		persistLayer.updateCustomer(name, age, gender, id);
 	}
+    public void deactivateAccount(long accountNo) throws SQLException, CustomException {
+    	persistLayer.deactivateAccount(accountNo);
+	}
+    
 }

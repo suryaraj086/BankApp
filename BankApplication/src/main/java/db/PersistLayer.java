@@ -89,4 +89,9 @@ public class PersistLayer implements Storage  {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void deactivateAccount(long accountNo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

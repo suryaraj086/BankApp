@@ -1,12 +1,16 @@
 package mypack;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import db.APILayer;
+import myexception.CustomException;
 
 
 public class Deactivate extends HttpServlet {
@@ -24,10 +28,17 @@ public class Deactivate extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+		APILayer logicLayer=(APILayer)request.getServletContext().getAttribute("logic");
 		String[] arr=request.getParameterValues("name");
+//		Long accNo;
 		for(int i=0;i<arr.length;i++)
 		{
-			System.out.println(arr[i]);
+			try {
+				System.out.print(arr[i]);
+				logicLayer.deactivateAccount(Long.parseLong(arr[i]));
+			}  catch (NumberFormatException | SQLException | CustomException e) {
+				e.printStackTrace();
+			}
 		}
 		RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 	    rd.forward(request, response);

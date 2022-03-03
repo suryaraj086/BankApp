@@ -251,4 +251,15 @@ public class DBLayer implements Storage {
 		    stmt.executeUpdate();
 		}
 	}
+	
+	public void deactivateAccount(long accountnumber) throws SQLException, CustomException
+	{
+		String input="Update accountdata " + "SET status=? where accountnumber=?";
+		try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+		{ 	
+		    stmt.setBoolean(1, false);
+		  	stmt.setLong(2,accountnumber);
+		    stmt.executeUpdate();
+		}
+	}
 }

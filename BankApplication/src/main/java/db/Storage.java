@@ -19,5 +19,5 @@ public interface Storage {
 	public void updateCustomer(String name,int age,char gender,long id) throws SQLException, CustomException;
 	public void storeAccount(long id,String branch,String name,long accNo,long balance,boolean status) throws SQLException, CustomException;
 	public Cache storeCustomer(long id,String name,char gender,int age) throws SQLException, ClassNotFoundException, IOException, CustomException;
-			
+	public void deactivateAccount(long accountNo) throws SQLException, CustomException;
 }

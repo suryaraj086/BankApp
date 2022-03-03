@@ -44,7 +44,7 @@ float:right;
   <c:forEach items="${LoginController}" var="current">
     <c:forEach items="${current.value}" var="current1"> 
     <tr>
-       <td><input type="checkbox" name="name" />&nbsp;</td>
+       <td><input type="checkbox" name="name" value="${current1.key}"/>&nbsp;</td>
        <td><c:out value="${current.key}"/></td>
        <td><c:out value="${current1.key}"/></td>
        <td><c:out value="${current1.value.getName()}" /></td>
