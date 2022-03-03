@@ -32,7 +32,13 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 
 		DBLayer dbObj=new DBLayer();
-		APILayer logicLayer=(APILayer) request.getServletContext().getAttribute("logic");
+		APILayer logicLayer=null;
+		try {
+			logicLayer = new APILayer();
+		} catch (ClassNotFoundException | IOException | CustomException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		PrintWriter out = response.getWriter();
         String page=request.getParameter("page");
        
@@ -50,8 +56,10 @@ public class LoginController extends HttpServlet {
 			if (role) 
 			{
 
-			    RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
-			    rd.forward(request, response);  
+				Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
+				request.setAttribute("LoginController", accMap);
+		    	RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
+		        rd.forward(request, response);  
 			}
 			else
 			{	
@@ -83,6 +91,7 @@ public class LoginController extends HttpServlet {
 		
 		if(page.equals("Customer details"))
 		{
+		
 			Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
 			request.setAttribute("LoginController", cusMap);
 			RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
@@ -120,14 +129,16 @@ public class LoginController extends HttpServlet {
 	
 	
 	public void init(ServletConfig config) {
-		try {
+		try 
+		{
 			super.init(config);
 			APILayer logicLayer=new APILayer();
 			config.getServletContext().setAttribute("logic", logicLayer);
-		} catch (ServletException | ClassNotFoundException | IOException | CustomException e) {
+		}
+		catch (ServletException | ClassNotFoundException | IOException | CustomException e) 
+		{
 			e.printStackTrace();
 		}
 		config.getServletContext();
-	}
-	
+	}	
 }

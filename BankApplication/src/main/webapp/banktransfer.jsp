@@ -21,7 +21,7 @@ margin-top: 70px
 </style>
 </head>
 <body>
-<a href="customermenu.jsp">Home</a>
+
 <form action="TransactionServlet" method="post">
   <div class="container">
     <h1>Bank Transfer</h1>

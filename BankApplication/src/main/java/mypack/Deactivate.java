@@ -32,10 +32,12 @@ public class Deactivate extends HttpServlet {
 		String[] arr=request.getParameterValues("name");
 		for(int i=0;i<arr.length;i++)
 		{
-			try {
-				System.out.print(arr[i]);
+			try 
+			{
 				logicLayer.deactivateAccount(Long.parseLong(arr[i]));
-			}  catch (NumberFormatException | SQLException | CustomException e) {
+			}  
+			catch (NumberFormatException | SQLException | CustomException e) 
+			{
 				e.printStackTrace();
 			}
 		}

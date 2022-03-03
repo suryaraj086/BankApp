@@ -20,7 +20,6 @@ margin-top: 130px
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<a href="adminmenu.jsp">Home</a>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <form action="AddAccount" id="accform" method="post">
   <div class="container">

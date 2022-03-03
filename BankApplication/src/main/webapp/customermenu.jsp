@@ -9,7 +9,7 @@
  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+<form action="action" method="post">
 <a href="banktransfer.jsp">Transfer to another account</a>
 <a href="login.jsp">logout</a>
 <table id="customers" style="width:100%">
@@ -22,10 +22,10 @@
     <tr>
       <td><c:out value="${current1.key}"/></td>
       <td><c:out value="${current1.value.getBranch()}" /></td>    
-       <td><c:out value="${current1.value.getBalance()}" /></td>
-       
+      <td><c:out value="${current1.value.getBalance()}" /></td> 
     </tr>
   </c:forEach>
 </table>
+</form>
 </body>
 </html>

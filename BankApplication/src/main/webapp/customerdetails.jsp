@@ -16,7 +16,7 @@ float:right;
 </style>
 </head>
 <body>
-<a href="adminmenu.jsp">Home</a><jsp:include page="adminmenu.jsp"></jsp:include>
+<jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" href="addcustomer.jsp">Add Customer</a>
 <br>
 <form action="AddCustomer" method="post">
@@ -30,7 +30,7 @@ float:right;
   
   <c:forEach items="${LoginController}" var="current1"> 
     <tr>
-      <td><button type="submit"  name="id" value="<c:out value="${current1.key}"/>" formaction="addcustomer.jsp" ><c:out value="${current1.key}"/></button></td>
+      <td><button type="submit"  name="id" value="<c:out value="${current1.key}" />"  formaction="addcustomer.jsp" ><c:out value="${current1.key}"/></button></td>
        <td><c:out value="${current1.value.getName()}" /></td>
        <td><c:out value="${current1.value.getAge()}" /></td>
        <td><c:out value="${current1.value.getGender()}" /></td>    

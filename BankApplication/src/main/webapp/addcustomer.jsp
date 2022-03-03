@@ -31,7 +31,7 @@ margin-top: 80px;
  <%String s=request.getParameter("id");%>
     <label for="name"><b>Name</b></label>
     <input type="text" placeholder="Enter Name" name="name" id="name" required>
- 
+    
        <label for="age"><b>Age</b></label>
     <input type="text" placeholder="Enter Age" name="age" id="age" required>
     
@@ -39,12 +39,8 @@ margin-top: 80px;
   <label for="deposit">male</label><br>
   <input type="radio" id="female" name="gender" value="female" required>
   <label for="withdraw">female</label>
-    <br><br>
-     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Id" value="" name="password" id="password" required>
-
-     <label for="psw"><b>Confirm Password</b></label>
-    <input type="password" placeholder="Enter Id" name="confirmpassword" id="psw" required>
+    <br>
+ 
     <hr>
 
 <input type="hidden" name="userId" value="<%out.print(s);%>">

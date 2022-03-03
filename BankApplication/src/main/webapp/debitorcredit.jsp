@@ -22,7 +22,6 @@ margin-top: 130px
 </style>
 </head>
 <body>
-<a href="adminmenu.jsp">Home</a>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <form action="DebitCredit" id="debtcrdt" method="post">
 

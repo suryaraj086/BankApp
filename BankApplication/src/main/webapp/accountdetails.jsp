@@ -20,7 +20,7 @@ float:right;
 </head>
 <body>
 
-<a href="adminmenu.jsp">Home</a>
+
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" href="addaccount.jsp">Add account</a>
 <form action="Deactivate" method="post">
@@ -38,7 +38,7 @@ float:right;
     <th>Customer Name</th>
     <th>Branch</th>  
     <th>Balance</th>
-     <th>Status</th>
+     
   </tr>
 
   <c:forEach items="${LoginController}" var="current">
@@ -50,7 +50,7 @@ float:right;
        <td><c:out value="${current1.value.getName()}" /></td>
        <td><c:out value="${current1.value.getBranch()}" /></td>
        <td><c:out value="${current1.value.getBalance()}" /></td>
-       <td><c:out value="${current1.value.isStatus()}" /></td>
+
     </tr>
   </c:forEach>
  </c:forEach>

@@ -20,7 +20,6 @@ margin-top: 20px
 </style>
 </head>
 <body>
-<a href="adminmenu.jsp">Home</a>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <form action="TransactionServlet" id="transfer" method="post">
   <div class="container">
