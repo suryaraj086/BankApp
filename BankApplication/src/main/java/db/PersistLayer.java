@@ -94,4 +94,11 @@ public class PersistLayer implements Storage  {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean login(long id, String password) throws SQLException, CustomException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

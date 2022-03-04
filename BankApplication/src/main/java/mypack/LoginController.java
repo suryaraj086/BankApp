@@ -31,12 +31,10 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		DBLayer dbObj=new DBLayer();
 		APILayer logicLayer=null;
 		try {
 			logicLayer = new APILayer();
 		} catch (ClassNotFoundException | IOException | CustomException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		PrintWriter out = response.getWriter();
@@ -50,12 +48,11 @@ public class LoginController extends HttpServlet {
  	        
 		try {
 			
-			boolean role=dbObj.login(id, password);
+			boolean role=logicLayer.persistLayer.login(id, password);
 			session.setAttribute("customerId", id);
 			
 			if (role) 
 			{
-
 				Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
 				request.setAttribute("LoginController", accMap);
 		    	RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
@@ -69,8 +66,8 @@ public class LoginController extends HttpServlet {
 			      rd.forward(request, response);  
 			}	
 		    }
-		catch (SQLException | CustomException | ServletException | IOException e) {
-					 out.println("Inavlid username and password"); 
+		catch (CustomException | ServletException | IOException | SQLException e) {
+					 out.println("Invalid username and password"); 
 					 e.printStackTrace();
 			}
 		}
@@ -118,9 +115,7 @@ public class LoginController extends HttpServlet {
 		
 		if(page.equals("logout"))
 		{
-	
-			HttpSession session1 = request.getSession();
-			session1.invalidate();
+	        session.invalidate();
 			RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
 	        rd.forward(request, response);  	
 		}

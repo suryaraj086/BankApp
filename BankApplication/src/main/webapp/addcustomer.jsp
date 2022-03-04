@@ -20,7 +20,6 @@ margin-top: 80px;
 </style>
 </head>
 <body>
-<a href="adminmenu.jsp">Home</a>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <form action="AddCustomer" id="cusform" method="post">
   <div class="container">
@@ -29,10 +28,17 @@ margin-top: 80px;
     <hr>
 <%-- <% String id=(String)request.getParameter("id"); out.print(id);%> --%>
  <%String s=request.getParameter("id");%>
+ <% if(s!=null){
+	out.println("<html><body><label ><b>Id</b></label> <input type= text value="+s+ " name=id id=id disabled></body></html>");	  
+	}
+ %>
+ <% out.print(request.getParameter("name"));%>
+ <% String[] name=request.getParameterValues("name");%>
+
     <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter Name" name="name" id="name" required>
+    <input type="text" placeholder="Enter Name" value=" <%if(s!=null){out.print(name[Integer.parseInt(s)-1]);} %>" name="name" id="name" required>
     
-       <label for="age"><b>Age</b></label>
+    <label for="age"><b>Age</b></label>
     <input type="text" placeholder="Enter Age" name="age" id="age" required>
     
    &nbsp; <input type="radio" id="male" name="gender" value="male" required>

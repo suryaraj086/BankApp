@@ -218,7 +218,7 @@ public class DBLayer implements Storage {
 	}
 	}
 	
-	public Boolean login(long userId,String password) throws SQLException, CustomException 
+	public boolean login(long userId,String password) throws SQLException, CustomException 
 	{
 		String input="select * from login " + " where userId=? and password=?";
 		boolean role = false;
@@ -262,4 +262,5 @@ public class DBLayer implements Storage {
 		    stmt.executeUpdate();
 		}
 	}
+
 }

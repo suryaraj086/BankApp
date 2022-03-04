@@ -30,6 +30,12 @@ public class Deactivate extends HttpServlet {
 		doGet(request, response);
 		APILayer logicLayer=(APILayer)request.getServletContext().getAttribute("logic");
 		String[] arr=request.getParameterValues("name");
+		if(arr==null)
+		{
+			RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+		    rd.forward(request, response);
+		}
+		else {
 		for(int i=0;i<arr.length;i++)
 		{
 			try 
@@ -43,6 +49,7 @@ public class Deactivate extends HttpServlet {
 		}
 		RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 	    rd.forward(request, response);
+	}
 	}
 
 }

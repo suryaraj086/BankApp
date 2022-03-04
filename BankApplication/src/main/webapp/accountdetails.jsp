@@ -17,18 +17,23 @@
 float:right;
 }
 </style>
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+
 </head>
 <body>
-
-
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" href="addaccount.jsp">Add account</a>
 <form action="Deactivate" method="post">
-<input type="submit" value="Deactivate">
-
+<input type="submit" onclick="myFunction()"  value="Deactivate">
 <br>
-
-
 
 <table id="customers" style="width:100%">
   <tr>
@@ -38,9 +43,8 @@ float:right;
     <th>Customer Name</th>
     <th>Branch</th>  
     <th>Balance</th>
-     
   </tr>
-
+  
   <c:forEach items="${LoginController}" var="current">
     <c:forEach items="${current.value}" var="current1"> 
     <tr>
@@ -50,11 +54,9 @@ float:right;
        <td><c:out value="${current1.value.getName()}" /></td>
        <td><c:out value="${current1.value.getBranch()}" /></td>
        <td><c:out value="${current1.value.getBalance()}" /></td>
-
     </tr>
   </c:forEach>
  </c:forEach>
- 
 </table>
 </form>
 </body>

@@ -33,7 +33,7 @@ float:right;
       <td><button type="submit"  name="id" value="<c:out value="${current1.key}" />"  formaction="addcustomer.jsp" ><c:out value="${current1.key}"/></button></td>
        <td><c:out value="${current1.value.getName()}" /></td>
        <td><c:out value="${current1.value.getAge()}" /></td>
-       <td><c:out value="${current1.value.getGender()}" /></td>    
+       <td><c:out value="${current1.value.getGender()}" /></td>   
     </tr>
   </c:forEach>
 </table>
