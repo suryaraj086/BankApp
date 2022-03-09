@@ -17,6 +17,7 @@ margin-left: 600px;
 margin-top: 130px
 }
 </style>
+  <script src="script/myscripts.js"></script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -28,13 +29,20 @@ margin-top: 130px
     <hr>
 
     <label for="email"><b>User Id</b></label>
-    <input type="text" placeholder="Enter Id" name="id" id="id" required>
+    <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Id" name="id" id="id" required>
 
     <label for="name"><b>Name</b></label>
     <input type="text" placeholder="Enter Name" name="name" id="name" required>
     
     <label for="branch"><b>branch</b></label>
-    <input type="text" placeholder="Enter branch" name="branch" id="branch" required>
+<!--     <input type="text" placeholder="Enter branch" name="branch" id="branch" required> -->
+<br>
+<select class="btn btn-secondary dropdown-toggle" name="branch" id="branch">
+  <option value="Karaikudi">Karaikudi</option>
+  <option value="Coimbatore">Coimbatore</option>
+  <option value="Madurai">Madurai</option>
+  <option value="Trichy">Trichy</option>
+</select>
 
     <hr>
     <button type="submit" class="registerbtn">Register</button>

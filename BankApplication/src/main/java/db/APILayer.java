@@ -153,5 +153,15 @@ public class APILayer {
     public void deactivateAccount(long accountNo) throws SQLException, CustomException {
     	persistLayer.deactivateAccount(accountNo);
 	}
+
+	public void activateAccount(long accountNo) throws SQLException, CustomException {
+    	persistLayer.activateAccount(accountNo);
+		
+	}
+
+	public void newLogin(long accountNo,String password) throws SQLException, CustomException {
+    	persistLayer.newLogin(accountNo,password);
+		
+	}
     
 }

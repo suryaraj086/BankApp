@@ -2,12 +2,15 @@ package mypack;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import db.APILayer;
+import db.CustomerInfo;
 import myexception.CustomException;
 
 
@@ -36,10 +39,19 @@ public class AddCustomer extends HttpServlet {
 		{
 		try 
 		{
+			
 		long userID=logicLayer.cache.idNo;
 		userID++;
 		logicLayer.persistLayer.storeCustomer(userID,name,gender,age);
-		RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+		logicLayer.readFile();
+		int min=100;
+		int max=1000;
+		int b = (int)(Math.random()*(max-min+1)+min);  
+		String password=String.valueOf(b);
+		logicLayer.newLogin(userID, password);
+		Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
+		request.setAttribute("LoginController", cusMap);
+		RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
 	    rd.forward(request, response); 
 		}
 		catch (ClassNotFoundException | SQLException | IOException | CustomException e) {
@@ -52,10 +64,13 @@ public class AddCustomer extends HttpServlet {
 			long cusId= Long.parseLong(id);
 			try {
 				logicLayer.updateCustomer(name, age, gender, cusId);
-			} catch (SQLException | CustomException e) {
+				logicLayer.readFile();
+			} catch (SQLException | CustomException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+			 Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
+			 request.setAttribute("LoginController", cusMap);
+			 RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
 		     rd.forward(request, response); 
 		}
 			

@@ -39,6 +39,12 @@
   <servlet-class>mypack.Deactivate</servlet-class>  
   </servlet> 
   
+  <servlet>  
+  <servlet-name>Activate</servlet-name>  
+  <servlet-class>mypack.Activate</servlet-class>  
+  </servlet> 
+  
+  
   <servlet-mapping>  
   <servlet-name>LoginController</servlet-name>
   <url-pattern>/LoginController</url-pattern>  
@@ -67,6 +73,12 @@
   <servlet-mapping>  
   <servlet-name>Deactivate</servlet-name>  
   <url-pattern>/Deactivate</url-pattern>  
+  </servlet-mapping> 
+
+  
+  <servlet-mapping>  
+  <servlet-name>Activate</servlet-name>  
+  <url-pattern>/Active</url-pattern>  
   </servlet-mapping> 
   
   

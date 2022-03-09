@@ -3,6 +3,7 @@ package mypack;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import db.APILayer;
+import db.AccountInfo;
 import myexception.CustomException;
 
 public class DebitCredit extends HttpServlet {
@@ -30,8 +32,8 @@ public class DebitCredit extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		PrintWriter out=response.getWriter();
 		String debtCrdt= request.getParameter("debitorcredit");
-		PrintWriter out = response.getWriter();
 		APILayer logicLayer=null;
 		try {
 			logicLayer = new APILayer();
@@ -41,23 +43,34 @@ public class DebitCredit extends HttpServlet {
 		long userId=Long.parseLong(request.getParameter("id"));
 		long accNumber=Long.parseLong(request.getParameter("accountnumber"));
 		long amount=Long.parseLong(request.getParameter("amount"));
+		Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
+		request.setAttribute("LoginController", accMap);
 		if(debtCrdt.equals("deposit"))
 		{
 		try {
 		    logicLayer.deposit(accNumber, userId, amount);
-			 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+		    
+			 RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
 	         rd.forward(request, response);  
-		} 
-		catch (Exception e) {
-			out.print("deposit amount can not be negative or zero");		}
+		}
+		catch (Exception e) 
+		{
+			 request.setAttribute ("errorMessage", e);
+			 RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
+		     rd.forward(request, response); 
+		}
 		}
 		else {
-		    try {
+		    try 
+		    {
 				logicLayer.withdrawal(accNumber,userId, amount);
-				 RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
+				 RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
 		         rd.forward(request, response);  
-			} catch (ClassNotFoundException | SQLException | CustomException e) {
-				out.print("insufficient balance");
+			} 
+		    catch (ClassNotFoundException | SQLException | CustomException e) {
+				 request.setAttribute ("errorMessage", "Insufficient Balance");
+					RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
+			        rd.forward(request, response); 
 			}
 			
 		

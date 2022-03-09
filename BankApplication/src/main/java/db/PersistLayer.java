@@ -101,4 +101,28 @@ public class PersistLayer implements Storage  {
 		return false;
 	}
 
+	@Override
+	public long getId(long accNo) throws SQLException, CustomException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void activateAccount(long accountNo) throws SQLException, CustomException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<Long, Map<Long, AccountInfo>> readInactive() throws IOException, ClassNotFoundException, CustomException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void newLogin(long userId, String password) throws SQLException, CustomException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

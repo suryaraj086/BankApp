@@ -98,7 +98,7 @@ public class DBLayer implements Storage {
 		
 		try(Statement st=ConnectionUtility.getConnection().createStatement())  	//here bank is database name, root is username and 1234 is password  
 		{
-			  String query = "SELECT * FROM accountdata where status=true";
+			  String query = "SELECT * FROM accountdata";
 		      //java.sql.Statement st = con.createStatement();
 		      ResultSet rs = st.executeQuery(query);
 		      while (rs.next())
@@ -262,5 +262,84 @@ public class DBLayer implements Storage {
 		    stmt.executeUpdate();
 		}
 	}
+	
+	public void activateAccount(long accountnumber) throws SQLException, CustomException
+	{
+		String input="Update accountdata " + "SET status=? where accountnumber=?";
+		try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+		{ 	
+		    stmt.setBoolean(1, true);
+		  	stmt.setLong(2,accountnumber);
+		    stmt.executeUpdate();
+		}
+	}
+	
+	
+	public long getId(long accNo) throws SQLException, CustomException {
+		String input="select * from accountdata " + " where accountnumber=?";
+		 long id = 0;
+		try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+		{ 
+			 stmt.setLong(1,accNo);
+			 ResultSet rs=stmt.executeQuery();
+	      while (rs.next())
+	      {
+	    	   id=rs.getLong("id");
+	      }
+		}
+		
+		return id;
+	}
+	
+public Map<Long, Map<Long, AccountInfo>> readInactive() throws IOException, ClassNotFoundException, CustomException, SQLException {
+		
+	    Map<Long,Map<Long, AccountInfo>> inpAccountMap=new HashMap<Long, Map<Long,AccountInfo>>();
+				
+		try(Statement st=ConnectionUtility.getConnection().createStatement())  	//here bank is database name, root is username and 1234 is password  
+		{
+			  String query = "SELECT * FROM accountdata where status=false";
+		      //java.sql.Statement st = con.createStatement();
+		      ResultSet rs = st.executeQuery(query);
+		      while (rs.next())
+		      {
+		        Long id = (long) rs.getLong("id");
+		        String name = rs.getString("name");
+		        long accountNumber = rs.getLong("accountnumber");
+		        String branch = rs.getString("branch");
+		        boolean status = rs.getBoolean("status");
+		        Long balance = rs.getLong("balance");
+		        AccountInfo accObj=new AccountInfo();
+		        accNo=accountNumber;
+		        accObj.setAccountNumber(accountNumber);
+		        accObj.setBalance(balance);
+		        accObj.setBranch(branch);
+		        accObj.setId(id);
+		        accObj.setName(name);
+		        accObj.setStatus(status);
+		        Map<Long, AccountInfo> tempMap=inpAccountMap.get(id);
+		        if(tempMap==null)
+		        {
+		        	tempMap=new HashMap<Long,AccountInfo>();
+		        	inpAccountMap.put(id, tempMap);
+		        }
+		        tempMap.put(accountNumber,accObj);
+		      }
+		      
+		   return inpAccountMap;
+	}
+}
+	public void newLogin(long userId,String password) throws SQLException, CustomException {
+		
+		String input="insert into login " + " values (?,?,?)";
+		try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+		{
+			stmt.setBoolean(1, false);
+			stmt.setLong(2,userId);
+		  	stmt.setString(3,password);
+		  	stmt.executeUpdate();
+		}
+		}
+	
+	
 
 }

@@ -33,10 +33,9 @@ margin-top: 80px;
 	}
  %>
  <% out.print(request.getParameter("name"));%>
- <% String[] name=request.getParameterValues("name");%>
 
     <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter Name" value=" <%if(s!=null){out.print(name[Integer.parseInt(s)-1]);} %>" name="name" id="name" required>
+    <input type="text" placeholder="Enter Name" value=" <%if(s!=null){} %>" name="name" id="name" required>
     
     <label for="age"><b>Age</b></label>
     <input type="text" placeholder="Enter Age" name="age" id="age" required>

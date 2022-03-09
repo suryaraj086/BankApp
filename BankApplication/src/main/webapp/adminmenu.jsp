@@ -3,10 +3,14 @@
     <%@ page import="java.util.*" %>
      <%@ page import="db.*" %>
       <%@ page import="javax.servlet.*" %>
+      
 <!DOCTYPE html>
 <html>
 <head>
  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/buttons.css">
+   <link rel="stylesheet" href="css/styles.css">
+   <link rel="stylesheet" href="css/bootstrap.min.css">
 <meta charset="UTF-8">
 <title>Admin Details</title>
 <style>
@@ -28,15 +32,17 @@ body{
 background-color: #E0E0E0;
 }
 </style>
+
 </head>
 <body>
+<nav class="navbar navbar-dark bg-dark">
 <form action="LoginController" method="post">
-<input type="submit" name="page" value="Account details">
-<input type="submit" name="page" value="Customer details">
-<input type="submit" name="page" value="Deposit">
-<input type="submit" name="page" value="Withdraw">
-<input type="submit" name="page" value="Transfer to another account">
-<input type="submit" name="page" value="logout">
+<input type="submit" name="page" class="btn btn-primary btn-lg btn-radius" value="Account details">
+<input type="submit" name="page" class="btn btn-primary btn-lg btn-radius"  value="Customer details">
+<input type="submit" name="page" class="btn btn-primary btn-lg btn-radius" value ="Deposit/Withdraw">
+<input type="submit" name="page" class="btn btn-primary btn-lg btn-radius" value="Transfer to another account">
+<input type="submit" name="page" class="btn btn-primary btn-lg btn-radius"  value="logout">
 </form>
+</nav>
 </body>
 </html>

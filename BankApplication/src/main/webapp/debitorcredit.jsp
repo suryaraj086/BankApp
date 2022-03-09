@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/style.css">
+<script src="script/myscripts.js"></script>
 <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -16,7 +17,7 @@ body {
 height:100px;
 width: 500px;
 margin-left: 650px;
-margin-top: 130px
+margin-top: 115px
 }
 
 </style>
@@ -26,14 +27,14 @@ margin-top: 130px
 <form action="DebitCredit" id="debtcrdt" method="post">
 
   <div class="container">
-    <h1>Deposit/Withdraw</h1>
+    <h2>Deposit/Withdraw</h2>
     <hr>
 
     <label for="id"><b>User Id</b></label>
-    <input type="text" placeholder="Enter Id" name="id" id="id" required>
+    <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Id" name="id" id="id" required>
 
     <label for="account"><b>Account Number</b></label>
-    <input type="text" placeholder="Enter Account Number" name="accountnumber" id="accountnumber" required>
+    <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Account Number" name="accountnumber" id="accountnumber" required>
     
   &nbsp;   <input type="radio" id="deposit" name="debitorcredit" value="deposit" required>
   <label for="deposit">Deposit</label><br>
@@ -41,9 +42,11 @@ margin-top: 130px
   <label for="withdraw">Withdraw</label><br>
     <br>
     <label for="branch"><b>Amount</b></label>
-    <input type="text" placeholder="Enter Amount" name="amount" id="amount" required>
+    <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Amount" name="amount" id="amount" required>
     <hr>
     <button type="submit" class="registerbtn">SUBMIT</button>
+               <%Object err=request.getAttribute("errorMessage"); if(err!=null){out.print("<label style=color:red; >*"+err+"</label>");}%>
+    
   </div>
 </form>
 

@@ -17,25 +17,30 @@
 float:right;
 }
 </style>
-<script>
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
-
+      <script type = "text/javascript">
+        
+            function getConfirmation() {
+               var retVal = confirm("Do you want to continue ?");
+               if( retVal == true ) {
+                  
+                  return true;
+               }
+               else {
+                 
+                  return false;
+               }
+            }
+        
+      </script>
 </head>
 <body>
 <jsp:include page="adminmenu.jsp"></jsp:include>
-<a id="add" href="addaccount.jsp">Add account</a>
+<a id="add" href="addaccount.jsp" class="btn btn-primary btn-lg btn-radius" >Add account</a>
 <form action="Deactivate" method="post">
-<input type="submit" onclick="myFunction()"  value="Deactivate">
-<br>
-
-<table id="customers" style="width:100%">
+&ensp;&ensp;<input type="submit" class="btn btn-primary btn-lg btn-radius"  onclick = "return getConfirmation();" value="Deactivate">
+<input type="submit" name="page" formaction="Active" formmethod="post" class="btn btn-primary btn-lg btn-radius"   value="Activate">
+<table id="customers" style="width:100%; margin-top: 0px; ">
   <tr>
   <th>Select</th>
     <th>Customer Id</th>
@@ -48,12 +53,16 @@ function closeForm() {
   <c:forEach items="${LoginController}" var="current">
     <c:forEach items="${current.value}" var="current1"> 
     <tr>
+        <c:if test="${current1.value.isStatus()}">
+    
        <td><input type="checkbox" name="name" value="${current1.key}"/>&nbsp;</td>
        <td><c:out value="${current.key}"/></td>
-       <td><c:out value="${current1.key}"/></td>
+       <td><button style=" height: 35px; width: 50px;" class="btn btn-primary btn-lg btn-radius" type="submit" id="id" name="id" value="<c:out value="${current1.key}" />"  formaction="addaccount.jsp" ><c:out value="${current1.key}" /></button></td>
        <td><c:out value="${current1.value.getName()}" /></td>
        <td><c:out value="${current1.value.getBranch()}" /></td>
        <td><c:out value="${current1.value.getBalance()}" /></td>
+         </c:if>
+  
     </tr>
   </c:forEach>
  </c:forEach>

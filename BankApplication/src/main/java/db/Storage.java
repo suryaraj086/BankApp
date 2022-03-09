@@ -8,7 +8,6 @@ import myexception.CustomException;
 
 public interface Storage {
 	
-
 	public Cache mapToFile(Map<Long,Map<Long, AccountInfo>> accMap,Map<Long, CustomerInfo> cusMap) throws CustomException, IOException, Exception;
 	public Cache readFromFile() throws IOException, ClassNotFoundException, CustomException;
 	public long getAccNo();
@@ -20,5 +19,9 @@ public interface Storage {
 	public void storeAccount(long id,String branch,String name,long accNo,long balance,boolean status) throws SQLException, CustomException;
 	public Cache storeCustomer(long id,String name,char gender,int age) throws SQLException, ClassNotFoundException, IOException, CustomException;
 	public void deactivateAccount(long accountNo) throws SQLException, CustomException;
+	public void activateAccount(long accountNo) throws SQLException, CustomException;
 	public boolean login(long id, String password) throws SQLException, CustomException;
+	public long getId(long accNo) throws SQLException, CustomException;
+	public Map<Long, Map<Long, AccountInfo>> readInactive() throws IOException, ClassNotFoundException, CustomException, SQLException;
+	public void newLogin(long userId,String password) throws SQLException, CustomException;
 }

@@ -14,10 +14,17 @@
 float:right;
 }
 </style>
+<script>
+$("#id").click(function(){
+    $("#name").trigger('click');
+
+})
+
+</script>
 </head>
 <body>
 <jsp:include page="adminmenu.jsp"></jsp:include>
-<a id="add" href="addcustomer.jsp">Add Customer</a>
+<a id="add" class="btn btn-primary btn-lg btn-radius" href="addcustomer.jsp">Add Customer</a>
 <br>
 <form action="AddCustomer" method="post">
 <table id="customers" style="width:100%">
@@ -30,8 +37,8 @@ float:right;
   
   <c:forEach items="${LoginController}" var="current1"> 
     <tr>
-      <td><button type="submit"  name="id" value="<c:out value="${current1.key}" />"  formaction="addcustomer.jsp" ><c:out value="${current1.key}"/></button></td>
-       <td><c:out value="${current1.value.getName()}" /></td>
+      <td><button style=" height: 35px; width: 50px;" class="btn btn-primary btn-lg btn-radius" type="submit" id="id" name="id" value="<c:out value="${current1.key}" />"  formaction="addcustomer.jsp" ><c:out value="${current1.key}" /></button></td>
+       <td><c:out value="${current1.value.getName()}"  /></td>
        <td><c:out value="${current1.value.getAge()}" /></td>
        <td><c:out value="${current1.value.getGender()}" /></td>   
     </tr>

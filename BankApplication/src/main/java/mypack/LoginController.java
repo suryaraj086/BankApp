@@ -2,7 +2,6 @@
 package mypack;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
@@ -37,12 +36,11 @@ public class LoginController extends HttpServlet {
 		} catch (ClassNotFoundException | IOException | CustomException e1) {
 			e1.printStackTrace();
 		}
-		PrintWriter out = response.getWriter();
         String page=request.getParameter("page");
        
         if(page.equals("login"))
         {
-        	int id = Integer.parseInt(request.getParameter("id"));
+        	Long id = Long.parseLong(request.getParameter("id"));
  	     	String password = request.getParameter("password");
  	        HttpSession session = request.getSession();
  	        
@@ -60,22 +58,30 @@ public class LoginController extends HttpServlet {
 			}
 			else
 			{	
+				  logicLayer.readFile();
 			      Map<Long, AccountInfo> userMap=logicLayer.retrieveAccount(id);    
 			      request.setAttribute("userMap",userMap);
-				  RequestDispatcher rd=request.getRequestDispatcher("customermenu.jsp");  
+			      session.setAttribute("acc", userMap);
+				  RequestDispatcher rd=request.getRequestDispatcher("customeraccount.jsp");  
 			      rd.forward(request, response);  
 			}	
 		    }
 		catch (CustomException | ServletException | IOException | SQLException e) {
-					 out.println("Invalid username and password"); 
+					 request.setAttribute ("errorMessage", "Invalid username or password");
+					  RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+				      rd.forward(request, response);  
 					 e.printStackTrace();
-			}
+			} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		}
+        else {
         HttpSession session = request.getSession();
         if (session.getAttribute("customerId") == null) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
         }
-        else {
+     
         
 		if(page.equals("Account details"))
 		{
@@ -95,13 +101,23 @@ public class LoginController extends HttpServlet {
 	        rd.forward(request, response);  	
 		}
 		
-		if(page.equals("Deposit"))
+		if(page.equals("Customer menu"))
 		{
-			RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
-	        rd.forward(request, response); 
+		
+			  Map<Long, AccountInfo> userMap = null;
+			try {
+				userMap = logicLayer.retrieveAccount((long)session.getAttribute("customerId"));
+			} catch (CustomException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}    
+		      request.setAttribute("userMap",userMap);
+		      session.setAttribute("acc", userMap);
+			  RequestDispatcher rd=request.getRequestDispatcher("customeraccount.jsp");  
+		      rd.forward(request, response);  	
 		}
 		
-		if(page.equals("Withdraw"))
+		if(page.equals("Deposit/Withdraw"))
 		{
 			RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
 	        rd.forward(request, response); 
@@ -120,7 +136,8 @@ public class LoginController extends HttpServlet {
 	        rd.forward(request, response);  	
 		}
         }
-      }	
+        }
+     	
 	
 	
 	public void init(ServletConfig config) {

@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import db.APILayer;
 import myexception.CustomException;
 
@@ -43,16 +45,21 @@ public class AddAccount extends HttpServlet {
 	     String branch=request.getParameter("branch");
 	     Long accountNo=logicLayer.cache.accNo;
 	     accountNo++;
+	
 	     try 
 	     {
+	         HttpSession session = request.getSession();
+		        if (session.getAttribute("customerId") == null) {
+		        	throw new CustomException("session expired");
+		            
+		        }
 			logicLayer.persistLayer.storeAccount(id, branch, name, accountNo, 1000, true);
 			RequestDispatcher rd=request.getRequestDispatcher("adminmenu.jsp");  
 		    rd.forward(request, response);  
 		 }
 	     catch (SQLException | CustomException e) 
 	     {
-			e.printStackTrace();
-		 }
+	    	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 }
 	  
 		 }	
 	}
