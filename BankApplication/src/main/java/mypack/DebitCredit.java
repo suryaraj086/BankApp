@@ -1,19 +1,17 @@
 package mypack;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Map;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import db.APILayer;
 import db.AccountInfo;
 import myexception.CustomException;
+import utilhelper.Utility;
 
 public class DebitCredit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,30 +30,30 @@ public class DebitCredit extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		PrintWriter out=response.getWriter();
-		String debtCrdt= request.getParameter("debitorcredit");
-		APILayer logicLayer=null;
-		try {
-			logicLayer = new APILayer();
-		} catch (ClassNotFoundException | IOException | CustomException e1) {
-			e1.printStackTrace();
-		}
-		long userId=Long.parseLong(request.getParameter("id"));
-		long accNumber=Long.parseLong(request.getParameter("accountnumber"));
-		long amount=Long.parseLong(request.getParameter("amount"));
+		String debtCrdt=null;
+		APILayer logicLayer=(APILayer)request.getServletContext().getAttribute("logic");
+		try 
+		{
+	    debtCrdt= Utility.nullChecker(request.getParameter("debitorcredit"));
+		logicLayer.readFile();
+		long userId=Long.parseLong(Utility.nullChecker(request.getParameter("id")));
+		long accNumber=Long.parseLong(Utility.nullChecker(request.getParameter("accountnumber")));
+		long amount=Long.parseLong(Utility.nullChecker(request.getParameter("amount")));
 		Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
 		request.setAttribute("LoginController", accMap);
+		
 		if(debtCrdt.equals("deposit"))
 		{
 		try {
 		    logicLayer.deposit(accNumber, userId, amount);
-		    
-			 RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
-	         rd.forward(request, response);  
+			request.setAttribute("LoginController", accMap);
+            RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Transaction Successful");  
+		     rd.forward(request, response); 
+            
 		}
 		catch (Exception e) 
 		{
-			 request.setAttribute ("errorMessage", e);
+			 request.setAttribute ("errorMessage", e.getMessage());
 			 RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
 		     rd.forward(request, response); 
 		}
@@ -64,18 +62,24 @@ public class DebitCredit extends HttpServlet {
 		    try 
 		    {
 				logicLayer.withdrawal(accNumber,userId, amount);
-				 RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
+				 RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Transaction Successful");  
 		         rd.forward(request, response);  
 			} 
 		    catch (ClassNotFoundException | SQLException | CustomException e) {
-				 request.setAttribute ("errorMessage", "Insufficient Balance");
+				 request.setAttribute ("errorMessage", e.getMessage());
 					RequestDispatcher rd=request.getRequestDispatcher("debitorcredit.jsp");  
 			        rd.forward(request, response); 
 			}
-			
-		
 		}
 		
+		
+		
 	}
+		catch (Exception e) {
+			request.setAttribute ("errorMessage", "The string cannot be null");
+			RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+	        rd.forward(request, response); 
+		}
 
+ }
 }

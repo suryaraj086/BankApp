@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import db.APILayer;
 import db.AccountInfo;
 import myexception.CustomException;
+import utilhelper.Utility;
 
 
 public class TransactionServlet extends HttpServlet {
@@ -33,13 +34,14 @@ public class TransactionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	doGet(request, response);
-	long fromAcc=Long.parseLong(request.getParameter("fromaccount"));
-	long toAcc= Long.parseLong(request.getParameter("toaccount"));
-	long amount=Long.parseLong(request.getParameter("amount"));
+	
     String cust=request.getParameter("customer");
 	APILayer logicLayer=(APILayer) request.getServletContext().getAttribute("logic");
 	try 
 	{
+		long fromAcc=Long.parseLong(Utility.nullChecker( request.getParameter("fromaccount")));
+		long toAcc= Long.parseLong(Utility.nullChecker(request.getParameter("toaccount")));
+		long amount=Long.parseLong(Utility.nullChecker(request.getParameter("amount")));
 		long fromId=0;
 		if(cust!=null)
 		{
@@ -58,7 +60,7 @@ public class TransactionServlet extends HttpServlet {
 		{
 			Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
 			request.setAttribute("LoginController", accMap);
-		RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
+		RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Transaction Successful");  
         rd.forward(request, response);  
 		}
 		else
@@ -68,11 +70,10 @@ public class TransactionServlet extends HttpServlet {
 					HttpSession session=request.getSession();
 					userMap = logicLayer.retrieveAccount((long)session.getAttribute("customerId"));
 				} catch (CustomException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}    
 			      request.setAttribute("userMap",userMap);
-			RequestDispatcher rd=request.getRequestDispatcher("customeraccount.jsp");  
+			RequestDispatcher rd=request.getRequestDispatcher("customeraccount.jsp?message=Transaction Successful");  
 	        rd.forward(request, response);  
 		}
 	}
@@ -89,6 +90,7 @@ public class TransactionServlet extends HttpServlet {
 			RequestDispatcher rd=request.getRequestDispatcher("banktransfer.jsp");  
 	        rd.forward(request, response);  
 		}
-			}
 	}
+	
+  }
 }

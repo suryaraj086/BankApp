@@ -27,6 +27,7 @@
   
   <c:forEach items="${activeacc}" var="current">
     <c:forEach items="${current.value}" var="current1"> 
+    <c:if test="${!current1.value.isStatus()}">
     <tr>
        <td><input type="checkbox" name="activate" value="${current1.key}"/>&nbsp;</td>
        <td><c:out value="${current.key}"/></td>
@@ -35,6 +36,7 @@
        <td><c:out value="${current1.value.getBranch()}" /></td>
        <td><c:out value="${current1.value.getBalance()}" /></td>
     </tr>
+    </c:if>
   </c:forEach>
  </c:forEach>
 </table>

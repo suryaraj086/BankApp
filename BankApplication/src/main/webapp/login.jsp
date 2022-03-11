@@ -43,14 +43,18 @@ div {
 }
 </style>
 <script>
-document.getElementById("myFrame").onload = function() {myFunction()};
-function myFunction() {
-	<%Object err=null; %>
-	}
-
+// const pageAccessedByReload = (
+// 		  (window.performance.navigation && window.performance.navigation.type === 1) ||
+// 		    window.performance
+// 		      .getEntriesByType('navigation')
+// 		      .map((nav) => nav.type)
+// 		      .includes('reload')
+// 		);
+<%-- 		<%Object err=null;%> --%>
+// 		alert(pageAccessedByReload);
 </script>
 </head>
-<body id="myFrame" background="images/background.png" >
+<body id="myFrame"  background="images/background.png" >
 <div>
   <form action="LoginController" method="post">
   <img src="images/1144709.png" style="margin-left:35%; height:80px; width:80px"/>
@@ -62,7 +66,7 @@ function myFunction() {
     <input type="submit" value="Submit">
      <input type="reset" value="Reset">
      <input type="hidden" value="login" name="page">
-     <% err=request.getAttribute("errorMessage"); if(err!=null){out.print("<label style=color:red; >*"+err+"</label>");}%>
+     <%Object err=request.getAttribute("errorMessage"); if(err!=null){out.print("<label style=color:red; >*"+err+"</label>");}%>
   </form>
 </div>
 </body>

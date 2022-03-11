@@ -6,8 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+   <script>
+      function load() {	  
+    	  <%String s=request.getParameter("message");%>
+          var message="<%=s%>";
+          if(message!='null')
+        	  {
+        	 alert(message);
+        	  }
+	}
+      
+      </script>
 </head>
-<body>
+<body onpageshow="load()">
 <jsp:include page="customermenu.jsp"></jsp:include>
 <table id="customers" style="width:100%">
   <tr>

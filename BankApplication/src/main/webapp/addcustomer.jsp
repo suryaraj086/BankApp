@@ -32,13 +32,12 @@ margin-top: 80px;
 	out.println("<html><body><label ><b>Id</b></label> <input type= text value="+s+ " name=id id=id disabled></body></html>");	  
 	}
  %>
- <% out.print(request.getParameter("name"));%>
 
     <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter Name" value=" <%if(s!=null){} %>" name="name" id="name" required>
+    <input type="text" placeholder="Enter Name" value="<%if(s!=null){out.print(request.getParameter("name"));}%>" name="name" id="name" required>
     
     <label for="age"><b>Age</b></label>
-    <input type="text" placeholder="Enter Age" name="age" id="age" required>
+    <input type="text" placeholder="Enter Age" name="age" value="<%if(s!=null){out.print(request.getParameter("age"));} %>" id="age" required>
     
    &nbsp; <input type="radio" id="male" name="gender" value="male" required>
   <label for="deposit">male</label><br>

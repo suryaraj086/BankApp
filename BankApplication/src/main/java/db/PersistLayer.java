@@ -125,4 +125,10 @@ public class PersistLayer implements Storage  {
 		
 	}
 
+	@Override
+	public void updateAccount(String name, long accNo, String branch, long id) throws SQLException, CustomException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

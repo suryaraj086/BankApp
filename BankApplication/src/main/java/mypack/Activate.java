@@ -36,9 +36,9 @@ public class Activate extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);		
-		APILayer logicLayer = null;
+		APILayer logicLayer = (APILayer)request.getServletContext().getAttribute("logic");
 		try {
-			logicLayer = new APILayer();
+			logicLayer.readFile();
 		} catch (ClassNotFoundException | IOException | CustomException e2) {
 			e2.printStackTrace();
 		}
@@ -46,13 +46,7 @@ public class Activate extends HttpServlet {
 		String page=request.getParameter("page");
 	if(page!=null)
 	{
-		Map map=null;
-	   try {
-		  map=logicLayer.persistLayer.readInactive();
-	} catch (ClassNotFoundException | IOException | CustomException | SQLException e) {
-		e.printStackTrace();
-	}
-	    request.setAttribute("activeacc", map);
+	    request.setAttribute("activeacc", logicLayer.cache.accountMap);
 		RequestDispatcher rd=request.getRequestDispatcher("activate.jsp");  
 	    rd.forward(request, response);
 	}
@@ -60,7 +54,7 @@ public class Activate extends HttpServlet {
 		if(arr==null)
 		{
 			Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
-			request.setAttribute("activeacc", accMap);
+			request.setAttribute("LoginController", accMap);
 			RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
 		    rd.forward(request, response);
 		}

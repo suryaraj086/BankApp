@@ -27,17 +27,19 @@ margin-top: 130px
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
-
+<%String acc= request.getParameter("accountnumber");%>
+<input type="hidden" name="accountnumber" value="<%out.print(acc); %>">
     <label for="email"><b>User Id</b></label>
-    <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Id" name="id" id="id" required>
+    <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Id" name="id" value="<%if(acc!=null){out.print(request.getParameter("id"));}%>" id="id" required>
 
     <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter Name" name="name" id="name" required>
+    <input type="text" onkeypress="return isLetter(event)" placeholder="Enter Name" name="name" value="<%if(acc!=null){out.print(request.getParameter("name"));}%>" id="name" required>
     
     <label for="branch"><b>branch</b></label>
 <!--     <input type="text" placeholder="Enter branch" name="branch" id="branch" required> -->
 <br>
 <select class="btn btn-secondary dropdown-toggle" name="branch" id="branch">
+<%if(acc!=null){%><option value="<%out.print(request.getParameter("branch"));%>"><% out.print(request.getParameter("branch"));%></option><%}%>
   <option value="Karaikudi">Karaikudi</option>
   <option value="Coimbatore">Coimbatore</option>
   <option value="Madurai">Madurai</option>

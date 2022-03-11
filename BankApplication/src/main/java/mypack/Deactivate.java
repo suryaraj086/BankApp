@@ -35,6 +35,11 @@ public class Deactivate extends HttpServlet {
 	
 		if(arr==null)
 		{
+			try {
+				logicLayer.readFile();
+			} catch (ClassNotFoundException | IOException | CustomException e) {
+				e.printStackTrace();
+			}
 			Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
 			request.setAttribute("LoginController", accMap);
 			RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
@@ -49,14 +54,17 @@ public class Deactivate extends HttpServlet {
 			}  
 			catch (NumberFormatException | SQLException | CustomException e) 
 			{
-				e.printStackTrace();
+				RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Error!can't deactivate account");  
+			    rd.forward(request, response);
 			}
 		}
-		try {
+		try 
+		{
 			logicLayer.readFile();
-		} catch (ClassNotFoundException | IOException | CustomException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		}
+		catch (ClassNotFoundException | IOException | CustomException e1) {
+			RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Error!can't retrieve account");  
+		    rd.forward(request, response);
 		}
 		Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
 		request.setAttribute("LoginController", accMap);

@@ -33,11 +33,22 @@ float:right;
             }
         
       </script>
+      <script>
+      function load() {	  
+    	  <%String s=request.getParameter("message");%>
+          var message="<%=s%>";
+          if(message!='null')
+        	  {
+        	 alert(message);
+        	  }
+	}
+      
+      </script>
 </head>
-<body>
+<body onpageshow="load()">
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" href="addaccount.jsp" class="btn btn-primary btn-lg btn-radius" >Add account</a>
-<form action="Deactivate" method="post">
+<form action="Deactivate"  method="post">
 &ensp;&ensp;<input type="submit" class="btn btn-primary btn-lg btn-radius"  onclick = "return getConfirmation();" value="Deactivate">
 <input type="submit" name="page" formaction="Active" formmethod="post" class="btn btn-primary btn-lg btn-radius"   value="Activate">
 <table id="customers" style="width:100%; margin-top: 0px; ">
@@ -57,7 +68,7 @@ float:right;
     
        <td><input type="checkbox" name="name" value="${current1.key}"/>&nbsp;</td>
        <td><c:out value="${current.key}"/></td>
-       <td><button style=" height: 35px; width: 50px;" class="btn btn-primary btn-lg btn-radius" type="submit" id="id" name="id" value="<c:out value="${current1.key}" />"  formaction="addaccount.jsp" ><c:out value="${current1.key}" /></button></td>
+       <td><button style=" height: 35px; width: 50px;" formaction="addaccount.jsp?id=${current.key}&accountnumber=${current1.key}&name=${current1.value.getName()}&branch=${current1.value.getBranch()}" class="btn btn-primary btn-lg btn-radius" type="submit" id="id" name="id" value="<c:out value="${current1.key}" />"  formaction="addaccount.jsp" ><c:out value="${current1.key}" /></button></td>
        <td><c:out value="${current1.value.getName()}" /></td>
        <td><c:out value="${current1.value.getBranch()}" /></td>
        <td><c:out value="${current1.value.getBalance()}" /></td>

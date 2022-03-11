@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import db.APILayer;
 import db.CustomerInfo;
 import myexception.CustomException;
+import utilhelper.Utility;
 
 
 public class AddCustomer extends HttpServlet {
@@ -30,10 +31,12 @@ public class AddCustomer extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		APILayer logicLayer=(APILayer) request.getServletContext().getAttribute("logic");
-		String id=request.getParameter("userId");
-		String name=request.getParameter("name");
-		char gender=request.getParameter("gender").charAt(0);
-		int age=Integer.parseInt(request.getParameter("age"));
+		try {
+			String id=Utility.nullChecker(request.getParameter("userId"));
+			char gender=Utility.nullChecker(request.getParameter("gender")).charAt(0);
+			int age=Integer.parseInt(Utility.nullChecker(request.getParameter("age")));
+			String name = Utility.nullChecker(request.getParameter("name"));
+		
 		
 		if(id.equals("null"))
 		{
@@ -55,8 +58,9 @@ public class AddCustomer extends HttpServlet {
 	    rd.forward(request, response); 
 		}
 		catch (ClassNotFoundException | SQLException | IOException | CustomException e) {
-			e.printStackTrace();
-		}
+			RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=Cant' add customer");  
+		     rd.forward(request, response); 	
+		     }
 		}
 		
 		else 
@@ -73,7 +77,10 @@ public class AddCustomer extends HttpServlet {
 			 RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
 		     rd.forward(request, response); 
 		}
-			
+		} catch (CustomException e1) {
+			 RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=Invalid input");  
+		     rd.forward(request, response); 
+		}
 		
 	}
 }

@@ -21,8 +21,19 @@ $("#id").click(function(){
 })
 
 </script>
+    <script>
+      function load() {	  
+    	  <%String mes=request.getParameter("message");%>
+          var message="<%=mes%>";
+          if(message!='null')
+        	  {
+        	 alert(message);
+        	  }
+	}
+      
+      </script>
 </head>
-<body>
+<body onpageshow="load()">
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" class="btn btn-primary btn-lg btn-radius" href="addcustomer.jsp">Add Customer</a>
 <br>
@@ -37,7 +48,7 @@ $("#id").click(function(){
   
   <c:forEach items="${LoginController}" var="current1"> 
     <tr>
-      <td><button style=" height: 35px; width: 50px;" class="btn btn-primary btn-lg btn-radius" type="submit" id="id" name="id" value="<c:out value="${current1.key}" />"  formaction="addcustomer.jsp" ><c:out value="${current1.key}" /></button></td>
+      <td><button style=" height: 35px; width: 50px;" formaction="addcustomer.jsp?name=${current1.value.getName()}&age=${current1.value.getAge()}" class="btn btn-primary btn-lg btn-radius" type="submit" id="id" name="id" value="<c:out value="${current1.key}" />"  formaction="addcustomer.jsp" ><c:out value="${current1.key}" /></button></td>
        <td><c:out value="${current1.value.getName()}"  /></td>
        <td><c:out value="${current1.value.getAge()}" /></td>
        <td><c:out value="${current1.value.getGender()}" /></td>   

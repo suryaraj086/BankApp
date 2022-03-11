@@ -7,3 +7,13 @@ function isNumber(evt) {
     }
     return true;
 }
+
+
+function isLetter(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 64 && charCode < 123) {
+        return true;
+    }
+    return false;
+}

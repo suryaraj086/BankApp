@@ -252,6 +252,20 @@ public class DBLayer implements Storage {
 		}
 	}
 	
+	public void updateAccount(String name,long accNo,String branch,long id) throws SQLException, CustomException
+	{
+		String input="Update accountdata " + "SET name=? , id=? , branch=? where accountnumber=?";
+		try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+		{ 	
+		  	stmt.setString(1,name);
+		  	stmt.setLong(2,id);
+		  	stmt.setString(3,branch);
+		  	stmt.setLong(4,accNo);
+		    stmt.executeUpdate();
+		}
+	}
+	
+	
 	public void deactivateAccount(long accountnumber) throws SQLException, CustomException
 	{
 		String input="Update accountdata " + "SET status=? where accountnumber=?";
@@ -340,6 +354,40 @@ public Map<Long, Map<Long, AccountInfo>> readInactive() throws IOException, Clas
 		}
 		}
 	
+	public void loginTable() throws SQLException, CustomException
+	{
+	String input="create table login " + " (roldId boolean REFERENCES role(role),userId integer,password varchar(20))";
+	try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+	{
+			stmt.executeQuery();
+	}
+	}
 	
-
+	public void roleTable() throws SQLException, CustomException
+	{
+	String input=" create table role(rolename varchar(25),role boolean NOT NULL PRIMARY KEY)";
+	try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+	{
+		stmt.executeQuery();
+    }
+	}
+	
+	public void customerTable() throws SQLException, CustomException
+	{
+	String input=" create table customerdata(id integer NOT NULL PRIMARY KEY,name varchar(25),age integer,gender char(1))";
+	try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+	{
+		stmt.executeQuery();
+    }
+	}
+	
+	public void accountTable() throws SQLException, CustomException
+	{
+	String input=" create table accountdata(id integer REFERENCES customerdata(id),name varchar(25),accountnumber integer NOT NULL PRIMARY KEY,branch varchar(20),balance integer,status boolean)";
+	try(PreparedStatement stmt=ConnectionUtility.getConnection().prepareStatement(input))  
+	{
+		stmt.executeQuery();
+    }
+	}
+			
 }

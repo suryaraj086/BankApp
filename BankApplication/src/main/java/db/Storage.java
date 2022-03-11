@@ -24,4 +24,5 @@ public interface Storage {
 	public long getId(long accNo) throws SQLException, CustomException;
 	public Map<Long, Map<Long, AccountInfo>> readInactive() throws IOException, ClassNotFoundException, CustomException, SQLException;
 	public void newLogin(long userId,String password) throws SQLException, CustomException;
+	public void updateAccount(String name,long accNo,String branch,long id) throws SQLException, CustomException;
 }
