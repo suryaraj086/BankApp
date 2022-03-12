@@ -21,7 +21,7 @@ float:right;
       <script type = "text/javascript">
         
             function getConfirmation() {
-               var retVal = confirm("Do you want to continue ?");
+               var retVal = confirm("Do you want to deactivate ?");
                if( retVal == true ) {
                   
                   return true;
@@ -34,23 +34,35 @@ float:right;
         
       </script>
       <script>
-      function load() {	  
+//       function load() {	  
     	  <%String s=request.getParameter("message");%>
-          var message="<%=s%>";
-          if(message!='null')
-        	  {
-        	 alert(message);
-        	  }
-	}
+<%--           var message="<%=s%>"; --%>
+//           if(message!='null')
+//         	  {
+//         	 alert(message);
+//         	  }
+// 	}
       
       </script>
+      <script type = "text/javascript" >  
+//     function preventBack() { window.history.forward(); }  
+//     setTimeout("preventBack()", 0);  
+//     window.onunload = function () { null };  
+</script> 
 </head>
+<%	 
+
+if (session.getAttribute("customerId") == null) {
+	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 
+} %>
 <body onpageshow="load()">
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" href="addaccount.jsp" class="btn btn-primary btn-lg btn-radius" >Add account</a>
 <form action="Deactivate"  method="post">
 &ensp;&ensp;<input type="submit" class="btn btn-primary btn-lg btn-radius"  onclick = "return getConfirmation();" value="Deactivate">
 <input type="submit" name="page" formaction="Active" formmethod="post" class="btn btn-primary btn-lg btn-radius"   value="Activate">
+<% if(s!=null){out.print("&ensp;<label style=color:Red;><b>*"+s+"</b></label>");}%>
+
 <table id="customers" style="width:100%; margin-top: 0px; ">
   <tr>
   <th>Select</th>

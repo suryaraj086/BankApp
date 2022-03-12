@@ -12,10 +12,15 @@
 <title>Activate</title>
 </head>
 <body>
+<%	 
+
+if (session.getAttribute("customerId") == null) {
+	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 
+} %>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <form action="activate" method="post">
 &ensp;&ensp;<input type="submit"  class="btn btn-primary btn-lg btn-radius" formaction="Active" formmethod="post" class="btn btn-primary btn-lg btn-radius"   value="Activate">
-<table id="customers" style="width:100%; margin-top: 0px; ">
+<table  id="customers" style="width:100%; margin-top: 0px; ">
   <tr>
   <th>Select</th>
     <th>Customer Id</th>

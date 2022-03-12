@@ -36,8 +36,8 @@ public class DebitCredit extends HttpServlet {
 		{
 	    debtCrdt= Utility.nullChecker(request.getParameter("debitorcredit"));
 		logicLayer.readFile();
-		long userId=Long.parseLong(Utility.nullChecker(request.getParameter("id")));
 		long accNumber=Long.parseLong(Utility.nullChecker(request.getParameter("accountnumber")));
+		long userId=logicLayer.persistLayer.getId(accNumber);
 		long amount=Long.parseLong(Utility.nullChecker(request.getParameter("amount")));
 		Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
 		request.setAttribute("LoginController", accMap);

@@ -23,6 +23,11 @@ margin-top: 115px
 </style>
 </head>
 <body>
+<%	 
+
+if (session.getAttribute("customerId") == null) {
+	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 
+} %>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <form action="DebitCredit" id="debtcrdt" method="post">
 
@@ -30,8 +35,8 @@ margin-top: 115px
     <h2>Deposit/Withdraw</h2>
     <hr>
 
-    <label for="id"><b>User Id</b></label>
-    <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Id" name="id" id="id" required>
+<!--     <label for="id"><b>User Id</b></label> -->
+<!--     <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Id" name="id" id="id" required> -->
 
     <label for="account"><b>Account Number</b></label>
     <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Account Number" name="accountnumber" id="accountnumber" required>
@@ -46,7 +51,7 @@ margin-top: 115px
     <hr>
     <button type="submit" class="registerbtn">SUBMIT</button>
                <%Object err=request.getAttribute("errorMessage"); if(err!=null){out.print("<label style=color:red; >*"+err+"</label>");}%>
-    
+    <label id="err" style="color: red;"></label>
   </div>
 </form>
 </body>

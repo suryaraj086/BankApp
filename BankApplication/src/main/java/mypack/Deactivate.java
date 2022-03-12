@@ -42,7 +42,7 @@ public class Deactivate extends HttpServlet {
 			}
 			Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
 			request.setAttribute("LoginController", accMap);
-			RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp");  
+			RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=please select an account");  
 		    rd.forward(request, response);
 		}
 		else {

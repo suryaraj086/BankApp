@@ -79,7 +79,7 @@ public class TransactionServlet extends HttpServlet {
 	}
 	catch (ClassNotFoundException | CustomException | SQLException e) 
 	{
-		 request.setAttribute ("errorMessage", e);
+		 request.setAttribute ("errorMessage", e.getMessage());
 		if(cust==null ||cust.equals("null"))
 		{
 		RequestDispatcher rd=request.getRequestDispatcher("banktransferadmin.jsp");  

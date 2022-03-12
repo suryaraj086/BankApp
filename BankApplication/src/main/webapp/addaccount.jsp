@@ -19,8 +19,14 @@ margin-top: 130px
 </style>
   <script src="script/myscripts.js"></script>
 <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
+<%	 
+
+if (session.getAttribute("customerId") == null) {
+	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 
+} %>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <form action="AddAccount" id="accform" method="post">
   <div class="container">
@@ -33,12 +39,12 @@ margin-top: 130px
     <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Id" name="id" value="<%if(acc!=null){out.print(request.getParameter("id"));}%>" id="id" required>
 
     <label for="name"><b>Name</b></label>
-    <input type="text" onkeypress="return isLetter(event)" placeholder="Enter Name" name="name" value="<%if(acc!=null){out.print(request.getParameter("name"));}%>" id="name" required>
+    <input type="text"  onkeypress="return isLetter()" placeholder="Enter Name" name="name" value="<%if(acc!=null){out.print(request.getParameter("name"));}%>" id="name" required>
     
     <label for="branch"><b>branch</b></label>
 <!--     <input type="text" placeholder="Enter branch" name="branch" id="branch" required> -->
 <br>
-<select class="btn btn-secondary dropdown-toggle" name="branch" id="branch">
+<select class="btn btn-secondary dropdown-toggle" name="branch" style="width: 100%;" id="branch">
 <%if(acc!=null){%><option value="<%out.print(request.getParameter("branch"));%>"><% out.print(request.getParameter("branch"));%></option><%}%>
   <option value="Karaikudi">Karaikudi</option>
   <option value="Coimbatore">Coimbatore</option>
@@ -51,6 +57,7 @@ margin-top: 130px
     <input type="hidden" name="page" value="addaccount">
 
     <% %>
+    <label style="color: red;" id="err"></label>
   </div>
   
 </form>

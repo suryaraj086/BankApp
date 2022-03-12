@@ -63,7 +63,7 @@ div {
     <input type="number" id="fname" name="id" placeholder="Enter the id">
     <label for="lname">Password</label>
     <input type="password" id="lname" name="password"  placeholder="Enter the password">
-    <input type="submit" value="Submit">
+    <input type="submit"  value="Submit">
      <input type="reset" value="Reset">
      <input type="hidden" value="login" name="page">
      <%Object err=request.getAttribute("errorMessage"); if(err!=null){out.print("<label style=color:red; >*"+err+"</label>");}%>

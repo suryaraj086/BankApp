@@ -72,7 +72,6 @@ public class LoginController extends HttpServlet {
 				      rd.forward(request, response);  
 					 e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}
@@ -108,7 +107,6 @@ public class LoginController extends HttpServlet {
 			try {
 				userMap = logicLayer.retrieveAccount((long)session.getAttribute("customerId"));
 			} catch (CustomException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}    
 		      request.setAttribute("userMap",userMap);
@@ -152,5 +150,5 @@ public class LoginController extends HttpServlet {
 			e.printStackTrace();
 		}
 		config.getServletContext();
-	}	
+	}
 }

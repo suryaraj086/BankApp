@@ -26,12 +26,18 @@ public class APILayer {
     public void addAccount(AccountInfo pjClass,long id,long accNumber) throws CustomException {
     	Map<Long,Map<Long, AccountInfo>> accountMap=cache.accountMap;
         Map<Long, AccountInfo> inpMap=accountMap.get(id);
+        Map<Long,CustomerInfo> cusMap=cache.customerMap;
+        if(cusMap.get(id)==null)
+        {
+        	throw new CustomException("please create customer first");
+        }
         if(inpMap==null)
         {
             inpMap=new HashMap<Long,AccountInfo>();
             accountMap.put(id, inpMap);
         }
         inpMap.put(accNumber,pjClass);
+
         cache.accountMap=accountMap;
     }
 

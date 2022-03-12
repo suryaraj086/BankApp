@@ -36,7 +36,8 @@ public class AddCustomer extends HttpServlet {
 			char gender=Utility.nullChecker(request.getParameter("gender")).charAt(0);
 			int age=Integer.parseInt(Utility.nullChecker(request.getParameter("age")));
 			String name = Utility.nullChecker(request.getParameter("name"));
-		
+			name=name.trim();
+			Utility.nullChecker(name);
 		
 		if(id.equals("null"))
 		{
@@ -58,6 +59,8 @@ public class AddCustomer extends HttpServlet {
 	    rd.forward(request, response); 
 		}
 		catch (ClassNotFoundException | SQLException | IOException | CustomException e) {
+			Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
+			request.setAttribute("LoginController", cusMap);
 			RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=Cant' add customer");  
 		     rd.forward(request, response); 	
 		     }
@@ -70,7 +73,10 @@ public class AddCustomer extends HttpServlet {
 				logicLayer.updateCustomer(name, age, gender, cusId);
 				logicLayer.readFile();
 			} catch (SQLException | CustomException | ClassNotFoundException e) {
-				e.printStackTrace();
+				Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
+				request.setAttribute("LoginController", cusMap);
+				RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=Cant' update customer");  
+			     rd.forward(request, response); 	
 			}
 			 Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
 			 request.setAttribute("LoginController", cusMap);
@@ -78,6 +84,8 @@ public class AddCustomer extends HttpServlet {
 		     rd.forward(request, response); 
 		}
 		} catch (CustomException e1) {
+			Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
+			request.setAttribute("LoginController", cusMap);
 			 RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=Invalid input");  
 		     rd.forward(request, response); 
 		}

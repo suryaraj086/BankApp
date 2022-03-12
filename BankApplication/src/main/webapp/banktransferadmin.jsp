@@ -20,11 +20,30 @@ margin-left: 650px;
 margin-top: 90px
 }
 </style>
+<script>
+function validate() {
+	var a=document.getElementById("fromaccount").value;
+	var b=document.getElementById("toaccount").value;
+	if(a==b)
+		{
+		document.getElementById("err").innerText="*Two accounts cannot be same";
+		return false
+		}
+	else
+		{return true}
+	
+}
+</script>
 </head>
 <body>
+<%	 
+
+if (session.getAttribute("customerId") == null) {
+	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 
+} %>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <br>
-<form action="TransactionServlet" id="transfer" method="post">
+<form action="TransactionServlet" onsubmit="return validate()" id="transfer" method="post">
   <div class="container">
     <h2>Bank Transfer</h2>
     <hr>
@@ -47,7 +66,7 @@ margin-top: 90px
     <input type="text" onkeypress="return isNumber(event)" placeholder="Enter Amount" name="amount" id="amount" required>
     <button type="submit" class="registerbtn">SUBMIT</button>
            <%Object err=request.getAttribute("errorMessage"); if(err!=null){out.print("<label style=color:red; >*"+err+"</label>");}%>
-    
+    <label style="color: red;" id=err ></label>
   </div>
   
 </form>

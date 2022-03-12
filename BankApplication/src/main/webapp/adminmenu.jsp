@@ -32,8 +32,13 @@ body{
 background-color: #E0E0E0;
 }
 </style>
+<%	 
 
+if (session.getAttribute("customerId") == null) {
+	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 
+} %>
 </head>
+
 <body>
 <nav class="navbar navbar-dark bg-dark">
 <form action="LoginController" method="post">

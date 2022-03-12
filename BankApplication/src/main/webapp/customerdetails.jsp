@@ -34,6 +34,11 @@ $("#id").click(function(){
       </script>
 </head>
 <body onpageshow="load()">
+<%	 
+
+if (session.getAttribute("customerId") == null) {
+	 response.sendRedirect(request.getContextPath() + "/login.jsp");		 
+} %>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" class="btn btn-primary btn-lg btn-radius" href="addcustomer.jsp">Add Customer</a>
 <br>
