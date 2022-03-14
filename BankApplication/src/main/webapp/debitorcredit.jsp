@@ -17,7 +17,7 @@ body {
 height:100px;
 width: 500px;
 margin-left: 650px;
-margin-top: 115px
+margin-top: 115px;
 }
 
 </style>

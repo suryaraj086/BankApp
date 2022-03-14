@@ -22,18 +22,19 @@ $("#id").click(function(){
 
 </script>
     <script>
-      function load() {	  
+//       function load() {	  
     	  <%String mes=request.getParameter("message");%>
-          var message="<%=mes%>";
-          if(message!='null')
-        	  {
-        	 alert(message);
-        	  }
-	}
+<%--           var message="<%=mes%>"; --%>
+//           if(message!='null')
+//         	  {
+//         	 alert(message);
+//         	  }
+// 	}
       
       </script>
 </head>
 <body onpageshow="load()">
+
 <%	 
 
 if (session.getAttribute("customerId") == null) {
@@ -41,8 +42,10 @@ if (session.getAttribute("customerId") == null) {
 } %>
 <jsp:include page="adminmenu.jsp"></jsp:include>
 <a id="add" class="btn btn-primary btn-lg btn-radius" href="addcustomer.jsp">Add Customer</a>
-<br>
+
 <form action="AddCustomer" method="post">
+<% if(mes!=null){out.print("&ensp;<label style=color:Red;><b>*"+mes+"</b></label>");}%>
+
 <table id="customers" style="width:100%">
   <tr>
    <th>Customer Id</th>

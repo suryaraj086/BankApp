@@ -75,5 +75,4 @@ public class Activate extends HttpServlet {
 	}
 	}
 	}
-
 }

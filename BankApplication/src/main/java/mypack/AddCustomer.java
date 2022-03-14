@@ -55,24 +55,27 @@ public class AddCustomer extends HttpServlet {
 		logicLayer.newLogin(userID, password);
 		Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
 		request.setAttribute("LoginController", cusMap);
-		RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
+		RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=customer added successfully");  
 	    rd.forward(request, response); 
 		}
 		catch (ClassNotFoundException | SQLException | IOException | CustomException e) {
 			Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
 			request.setAttribute("LoginController", cusMap);
 			RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=Cant' add customer");  
-		     rd.forward(request, response); 	
+		    rd.forward(request, response); 	
 		     }
 		}
 		
 		else 
 		{ 
 			long cusId= Long.parseLong(id);
-			try {
+			try 
+			{
 				logicLayer.updateCustomer(name, age, gender, cusId);
 				logicLayer.readFile();
-			} catch (SQLException | CustomException | ClassNotFoundException e) {
+			}
+			catch (SQLException | CustomException | ClassNotFoundException e)
+			{
 				Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
 				request.setAttribute("LoginController", cusMap);
 				RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=Cant' update customer");  
@@ -80,7 +83,7 @@ public class AddCustomer extends HttpServlet {
 			}
 			 Map<Long, CustomerInfo> cusMap = logicLayer.cache.customerMap;
 			 request.setAttribute("LoginController", cusMap);
-			 RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp");  
+			 RequestDispatcher rd=request.getRequestDispatcher("customerdetails.jsp?message=customer updated successfully");  
 		     rd.forward(request, response); 
 		}
 		} catch (CustomException e1) {

@@ -91,6 +91,5 @@ public class TransactionServlet extends HttpServlet {
 	        rd.forward(request, response);  
 		}
 	}
-	
   }
 }

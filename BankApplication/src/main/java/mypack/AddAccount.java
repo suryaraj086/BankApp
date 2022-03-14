@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import db.APILayer;
 import db.AccountInfo;
+import db.CustomerInfo;
 import myexception.CustomException;
 import utilhelper.Utility;
 
@@ -100,17 +101,25 @@ public class AddAccount extends HttpServlet {
 			long uId=Long.parseLong(updateId);
 			try 
 			{
+				Map<Long, CustomerInfo> map=logicLayer.cache.customerMap;
+				if(map.get(uId)==null)
+				{
+					throw new CustomException("Customer id not found");
+				}
 				logicLayer.persistLayer.updateAccount(name, acc, branch, uId);
 				logicLayer.readFile();
+				Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
+				request.setAttribute("LoginController", accMap);
+				RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Account updated succesfully");  
+				rd.forward(request, response); 
 			} 
 			catch (SQLException | CustomException | ClassNotFoundException e) {
-				e.printStackTrace();
+				Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
+				request.setAttribute("LoginController", accMap);
+				RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Account updation failed or customer id not found");  
+				rd.forward(request, response);
 			}
-			Map<Long, Map<Long, AccountInfo>> accMap = logicLayer.cache.accountMap;
-			request.setAttribute("LoginController", accMap);
-			RequestDispatcher rd=request.getRequestDispatcher("accountdetails.jsp?message=Account updated succesfully");  
-			rd.forward(request, response);  
-				
+			 
 		}
 	}
 }

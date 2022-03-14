@@ -54,7 +54,7 @@ div {
 // 		alert(pageAccessedByReload);
 </script>
 </head>
-<body id="myFrame"  background="images/background.png" >
+<body id="myFrame"  background="images/background.png"  >
 <div>
   <form action="LoginController" method="post">
   <img src="images/1144709.png" style="margin-left:35%; height:80px; width:80px"/>

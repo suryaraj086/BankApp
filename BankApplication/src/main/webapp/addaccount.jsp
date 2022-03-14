@@ -13,8 +13,8 @@ body {
 #accform{
 height:100px;
 width: 500px;
-margin-left: 600px;
-margin-top: 130px
+margin-left: 650px;
+margin-top: 115px
 }
 </style>
   <script src="script/myscripts.js"></script>
