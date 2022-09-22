@@ -16,17 +16,10 @@ CONNECTION;
 
 public static Connection getConnection() throws CustomException {
 	try {
-		
-		Class.forName("com.mysql.cj.jdbc.Driver");
-	}
-	catch (Exception e) {
-		// TODO: handle exception
-	}
-	try {
-	if(connect==null)
-	{
-		connect=DriverManager.getConnection(url,name,password);
-		return connect;
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	if(connect==null){
+	connect=DriverManager.getConnection(url,name,password);
+	return connect;
 	}
 	return connect;
 	}
