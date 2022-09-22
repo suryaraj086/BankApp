@@ -8,9 +8,9 @@ import myexception.CustomException;
 
 public enum ConnectionUtility {
 CONNECTION;
-	static String url="jdbc:mysql://localhost:3306/bank";
-	static String name="root";
-	static String password="1234";
+	static final String url="jdbc:mysql://localhost:3306/bank";
+	static final String name="root";
+	static final String password="1234";
 	static Connection connect=null;
 
 
